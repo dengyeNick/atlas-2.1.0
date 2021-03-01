@@ -55,6 +55,9 @@ public class AtlasGlossaryTerm extends AtlasGlossaryBaseObject {
     // Term antonyms
     private Set<AtlasRelatedTermHeader> antonyms;
 
+    // Term dengyes
+    private Set<AtlasRelatedTermHeader> dengyes;
+
     // Term preference
     private Set<AtlasRelatedTermHeader> preferredTerms;
     private Set<AtlasRelatedTermHeader> preferredToTerms;
@@ -91,6 +94,7 @@ public class AtlasGlossaryTerm extends AtlasGlossaryBaseObject {
         this.seeAlso = other.seeAlso;
         this.synonyms = other.synonyms;
         this.antonyms = other.antonyms;
+        this.dengyes=other.dengyes;
         this.preferredTerms = other.preferredTerms;
         this.preferredToTerms = other.preferredToTerms;
         this.replacementTerms = other.replacementTerms;
@@ -194,6 +198,15 @@ public class AtlasGlossaryTerm extends AtlasGlossaryBaseObject {
 
     public void setAntonyms(final Set<AtlasRelatedTermHeader> antonyms) {
         this.antonyms = antonyms;
+        hasTerms = true;
+    }
+
+    public Set<AtlasRelatedTermHeader> getDengyes() {
+        return dengyes;
+    }
+
+    public void setDengyes(final Set<AtlasRelatedTermHeader> dengyes) {
+        this.dengyes = dengyes;
         hasTerms = true;
     }
 
@@ -342,6 +355,10 @@ public class AtlasGlossaryTerm extends AtlasGlossaryBaseObject {
             ret.put(Relation.ANTONYMS, antonyms);
         }
 
+        if (CollectionUtils.isNotEmpty(dengyes)) {
+            ret.put(Relation.DENGYES, dengyes);
+        }
+
         if (CollectionUtils.isNotEmpty(preferredTerms)) {
             ret.put(Relation.PREFERRED_TERMS, preferredTerms);
         }
@@ -434,7 +451,8 @@ public class AtlasGlossaryTerm extends AtlasGlossaryBaseObject {
                        Objects.equals(isA, that.isA) &&
                        Objects.equals(classifies, that.classifies) &&
                        Objects.equals(validValues, that.validValues) &&
-                       Objects.equals(validValuesFor, that.validValuesFor);
+                       Objects.equals(validValuesFor, that.validValuesFor) &&
+                       Objects.equals(dengyes,that.dengyes);
     }
 
     @Override
@@ -442,13 +460,14 @@ public class AtlasGlossaryTerm extends AtlasGlossaryBaseObject {
 
         return Objects.hash(super.hashCode(), examples, abbreviation, usage, anchor, assignedEntities, categories,
                             seeAlso, synonyms, antonyms, preferredTerms, preferredToTerms, replacementTerms, replacedBy,
-                            translationTerms, translatedTerms, isA, classifies, validValues, validValuesFor);
+                            translationTerms, translatedTerms, isA, classifies, validValues, validValuesFor,dengyes);
     }
 
     public enum Relation {
         SEE_ALSO("AtlasGlossaryRelatedTerm", "seeAlso"),
         SYNONYMS("AtlasGlossarySynonym", "synonyms"),
         ANTONYMS("AtlasGlossaryAntonym", "antonyms"),
+        DENGYES("AtlasGlossaryDengye", "dengyes"),
         PREFERRED_TO_TERMS("AtlasGlossaryPreferredTerm", "preferredToTerms", true),
         PREFERRED_TERMS("AtlasGlossaryPreferredTerm", "preferredTerms"),
         REPLACEMENT_TERMS("AtlasGlossaryReplacementTerm", "replacementTerms", true),

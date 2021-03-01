@@ -115,6 +115,13 @@ public class AtlasGlossaryTermDTO extends AbstractGlossaryDTO<AtlasGlossaryTerm>
             ret.setAntonyms(toRelatedTermIdsSet(antonyms));
         }
 
+        Object dengyes = entity.getRelationshipAttribute("dengyes");
+        if (dengyes instanceof Collection && CollectionUtils.isNotEmpty((Collection) dengyes)) {
+            LOG.debug("Processing Dengyes(dengyes)");
+            System.out.println("");
+            ret.setDengyes(toRelatedTermIdsSet(dengyes));
+        }
+
         Object preferredTerms = entity.getRelationshipAttribute("preferredTerms");
         if (preferredTerms instanceof Collection && CollectionUtils.isNotEmpty((Collection) preferredTerms)) {
             LOG.debug("Processing preferredTerm(preferredTerms)");
